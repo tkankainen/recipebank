@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add recipe</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body> 
+	<div>
+		<form th:object="${recipe}" th:action="@{save}" action="#" method="post">
+			<table>
+				<tr>
+					<td>Name: <input type="text" id="name" th:field="*{name}" />
+					</td>
+					<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</td>
+				</tr>
+				<tr>
+					<td>Source: <input type="text" id="source" th:field="*{source}" /></td>
+				</tr>
+				<tr>
+					<td>Link: <input type="url" id="link" th:field="*{link}" /></td>
+				</tr>
+				
+				<tr>
+					<td>Difficulty (1=easy, 2=intermediate, 3=hard): <input type="number" id="difficultylevel"
+						th:field="*{difficultylevel}" /></td>
+					<td th:if="${#fields.hasErrors('difficultylevel')}" th:errors="*{difficultylevel}">Error</td>
+				</tr>
+				<tr>
+				<td>Category: 
+				<select id="categories" th:field="*{category}">
+					<option th:each="category: ${categories}" 
+					    th:value="${category.id}"
+						th:text="${category.name}"></option>
+				</select></td>
+				</tr>
+			</table>
+			<input type="submit" value="Save"></input>
+		</form>
+	</div>
+</body>
+</html> 
