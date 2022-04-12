@@ -1,5 +1,6 @@
 package RecipeBank.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +18,17 @@ public class Recipe {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Size(min=5, max=50)
+	@Size(min=5, max=50, message="Name must be between 5 and 50 characters")
 	private String name;
 	
 	private String source, link;
-	private String photo;
 	
-	@Min(1)
-	@Max(3)
+	@Min(value=1, message = "Difficulty level must be between 1-3 (1=easy, 2=intermediate, 3=hard)")
+	@Max(value=3, message = "Difficulty level must be between 1-3 (1=easy, 2=intermediate, 3=hard)")
 	private int difficultylevel;
+	
+	@Column(nullable = true, length = 64)
+    private String photos;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
@@ -34,32 +37,29 @@ public class Recipe {
 	public Recipe() {
 	}
 	
-	public Recipe(String name) {
-		this.name = name;
-	}
-	
 	public Recipe(String name, Category category) {
 		super();
 		this.name = name;
 		this.category = category;
 	}
 
-	public Recipe(@Size(min = 5, max = 50) String name, String source, String link, String photo,
-			@Min(1) @Max(3) int difficultylevel, Category category) {
-		super();
-		this.name = name;
-		this.source = source;
-		this.link = link;
-		this.photo = photo;
-		this.difficultylevel = difficultylevel;
-		this.category = category;
-	}
 
 	public Recipe(@Size(min = 5, max = 50) String name, String source, @Min(1) @Max(3) int difficultylevel,
 			Category category) {
 		super();
 		this.name = name;
 		this.source = source;
+		this.difficultylevel = difficultylevel;
+		this.category = category;
+	}
+	
+
+	public Recipe(@Size(min = 5, max = 50) String name, String source, String link, @Min(1) @Max(3) int difficultylevel,
+			Category category) {
+		super();
+		this.name = name;
+		this.source = source;
+		this.link = link;
 		this.difficultylevel = difficultylevel;
 		this.category = category;
 	}
@@ -96,20 +96,20 @@ public class Recipe {
 		this.link = link;
 	}
 
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
-
 	public int getDifficultylevel() {
 		return difficultylevel;
 	}
 
 	public void setDifficultylevel(int difficultylevel) {
 		this.difficultylevel = difficultylevel;
+	}
+
+	public String getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(String photos) {
+		this.photos = photos;
 	}
 
 	public Category getCategory() {

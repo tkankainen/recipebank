@@ -1,18 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<link type="text/css" rel="stylesheet" href="/css/sakura.css" th:href="@{/css/sakura.css}" >
 <head>
     <title>Recipe Bank</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body> 
 	<div>
-		<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+		<h3>Recipe Bank</h3>
+		<h5 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h5>
 			<form th:action="@{/logout}" method="post">
 				<input type="submit" value="Sign Out"/>
 			</form>
 		<table>
 			<tr>
 			<th>Recipe</th>
+			<th>Image</th>
 			<th>Category</th>
 			<th>Source</th>
 			<th>Link</th>
@@ -22,6 +25,7 @@
 			</tr>
 			<tr th:each="recipe : ${recipes}">
 			<td th:text="${recipe.name}"></td>
+			<td th:text="x"></td>
 			<td th:text="${recipe.category.name}"></td>
 			<td th:text="${recipe.source}"></td>
 			<td><a th:href="${recipe.link}">Link</a></td>
@@ -29,6 +33,7 @@
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editrecipe/{id}(id=${recipe.id})}">Edit</a></td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${recipe.id})}">Delete</a></td>
 		</table>
+		
 		<a sec:authorize="hasAuthority('ADMIN')" href="/addrecipe">Add recipe</a>
 	</div>
 </body>

@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import RecipeBank.domain.CategoryRepository;
 import RecipeBank.domain.Recipe;
@@ -38,11 +40,14 @@ public class RecipeBankController {
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping("/save")
-	public String save(@Valid Recipe recipe, BindingResult bindingResult, Model model) {
+	public String save(@Valid Recipe recipe, BindingResult bindingResult, 
+			@RequestParam("file") MultipartFile file, Model model) {
 		if (bindingResult.hasErrors()) {
 			System.out.println("Validation error");
         	return "/addrecipe";
         }
+		System.out.println(file.getSize());
+	    System.out.println(file.getContentType());
 		repository.save(recipe);
 		return "redirect:/index";
 	}

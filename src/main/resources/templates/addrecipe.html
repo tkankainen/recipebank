@@ -1,12 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<link type="text/css" rel="stylesheet" href="/css/sakura.css" th:href="@{/css/sakura.css}" >
 <head>
     <title>Add recipe</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body> 
 	<div>
-		<form th:object="${recipe}" th:action="@{save}" action="#" method="post">
+		<h3>Add recipe</h3>
+		<form th:object="${recipe}" th:action="@{save}" action="#" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<td>Name: <input type="text" id="name" th:field="*{name}" />
@@ -34,7 +36,11 @@
 				</select></td>
 				</tr>
 			</table>
+			<label>Photo: </label>
+			<input type="file" name="file" accept="image/png, image/jpeg, image/jpg" /><br/>
 			<input type="submit" value="Save"></input>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<a href="/index">Back to recipe list</a>
 		</form>
 	</div>
 </body>

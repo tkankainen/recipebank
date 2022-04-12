@@ -1,11 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<link type="text/css" rel="stylesheet" href="/css/sakura.css" th:href="@{/css/sakura.css}" >
 <head>
     <title>Edit recipe</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body> 
 	<div>
+		<h3>Edit recipe</h3>
 		<form th:object="${recipe}" th:action="@{../save}" action="#" method="post">
 			<input type="hidden" th:field="*{id}" class="form-control" />
 			<label for="name">Name</label>
@@ -25,7 +27,10 @@
 				th:value="${category.id}"
 				th:text="${category.name}"></option>
 			</select>
+			<div style="clear: both; display: block; height: 10px;"></div>
 			<input type="submit" value="Save"></input>
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<a href="/index">Back to recipe list</a>
 		</form>
 	</div>
 </body>
