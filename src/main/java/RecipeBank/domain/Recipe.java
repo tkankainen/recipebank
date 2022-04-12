@@ -1,18 +1,22 @@
 package RecipeBank.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @Entity 
-public class Recipe {
+public class Recipe extends AbstractPersistable<Long> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +31,8 @@ public class Recipe {
 	@Max(value=3, message = "Difficulty level must be between 1-3 (1=easy, 2=intermediate, 3=hard)")
 	private int difficultylevel;
 	
-	@Column(nullable = true, length = 64)
-    private String photos;
+	@Lob    
+	private byte[] photos;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoryid")
@@ -64,9 +68,9 @@ public class Recipe {
 		this.category = category;
 	}
 
-	public long getId() {
-		return id;
-	}
+//	public long getId() {
+//		return id;
+//	}
 
 	public void setId(long id) {
 		this.id = id;
@@ -104,13 +108,20 @@ public class Recipe {
 		this.difficultylevel = difficultylevel;
 	}
 
-	public String getPhotos() {
+	public byte[] getPhotos() {
 		return photos;
 	}
 
-	public void setPhotos(String photos) {
+	public void setPhotos(byte[] photos) {
 		this.photos = photos;
 	}
+	
+	@Transient
+    public String getPhotosImagePath() {
+        if (photos == null) return null;
+        
+        return "/files/" + id;
+    }
 
 	public Category getCategory() {
 		return category;

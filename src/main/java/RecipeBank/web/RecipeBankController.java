@@ -1,5 +1,7 @@
 package RecipeBank.web;
 
+import java.io.IOException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import RecipeBank.domain.CategoryRepository;
@@ -41,16 +44,28 @@ public class RecipeBankController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping("/save")
 	public String save(@Valid Recipe recipe, BindingResult bindingResult, 
-			@RequestParam("file") MultipartFile file, Model model) {
+			@RequestParam("file") MultipartFile file, Model model) throws IOException {
 		if (bindingResult.hasErrors()) {
 			System.out.println("Validation error");
         	return "/addrecipe";
         }
-		System.out.println(file.getSize());
-	    System.out.println(file.getContentType());
+		//Recipe recipe1 = new Recipe();
+		recipe.setPhotos(file.getBytes());
+	    
 		repository.save(recipe);
 		return "redirect:/index";
 	}
+	
+	
+	
+	@GetMapping(path = "/files/{id}", produces = "image/png")
+	@ResponseBody
+	public byte[] get(@PathVariable Long id) {
+		return repository.getOne(id).getPhotos();
+	}
+	
+	
+	
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/delete/{id}")

@@ -25,13 +25,14 @@
 			</tr>
 			<tr th:each="recipe : ${recipes}">
 			<td th:text="${recipe.name}"></td>
-			<td th:text="x"></td>
+			<td><img th:src="${recipe.photosImagePath}" /></td>
 			<td th:text="${recipe.category.name}"></td>
 			<td th:text="${recipe.source}"></td>
 			<td><a th:href="${recipe.link}">Link</a></td>
 			<td th:text="${recipe.difficultylevel}"></td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editrecipe/{id}(id=${recipe.id})}">Edit</a></td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${recipe.id})}">Delete</a></td>
+			
 		</table>
 		
 		<a sec:authorize="hasAuthority('ADMIN')" href="/addrecipe">Add recipe</a>
