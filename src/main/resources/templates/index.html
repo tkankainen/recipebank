@@ -9,9 +9,11 @@
 	<div>
 		<h3>Recipe Bank</h3>
 		<h5 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h5>
-			<form th:action="@{/logout}" method="post">
-				<input type="submit" value="Sign Out"/>
-			</form>
+		<a sec:authorize="hasAuthority('ADMIN')" href="/addrecipe">Add recipe</a>
+		<div style="clear: both; display: block; height: 10px;"></div>
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out"/>
+		</form>
 		<table>
 			<tr>
 			<th>Recipe</th>
@@ -28,14 +30,12 @@
 			<td><img th:src="${recipe.photosImagePath}" /></td>
 			<td th:text="${recipe.category.name}"></td>
 			<td th:text="${recipe.source}"></td>
-			<td><a th:href="${recipe.link}">Link</a></td>
+			<td><a th:href="${recipe.link}" th:text="${recipe.link}"></a></td>
 			<td th:text="${recipe.difficultylevel}"></td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/editrecipe/{id}(id=${recipe.id})}">Edit</a></td>
 			<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${recipe.id})}">Delete</a></td>
 			
 		</table>
-		
-		<a sec:authorize="hasAuthority('ADMIN')" href="/addrecipe">Add recipe</a>
 	</div>
 </body>
 </html>

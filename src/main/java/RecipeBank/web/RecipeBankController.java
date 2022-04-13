@@ -47,25 +47,20 @@ public class RecipeBankController {
 			@RequestParam("file") MultipartFile file, Model model) throws IOException {
 		if (bindingResult.hasErrors()) {
 			System.out.println("Validation error");
-        	return "/addrecipe";
+        	return "addrecipe";
         }
-		//Recipe recipe1 = new Recipe();
-		recipe.setPhotos(file.getBytes());
-	    
+		if (!file.isEmpty()) {
+			recipe.setPhotos(file.getBytes());
+		}
 		repository.save(recipe);
 		return "redirect:/index";
 	}
-	
-	
 	
 	@GetMapping(path = "/files/{id}", produces = "image/png")
 	@ResponseBody
 	public byte[] get(@PathVariable Long id) {
 		return repository.getOne(id).getPhotos();
 	}
-	
-	
-	
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/delete/{id}")

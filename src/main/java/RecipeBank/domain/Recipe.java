@@ -10,17 +10,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+//import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @Entity 
-public class Recipe extends AbstractPersistable<Long> {
+public class Recipe {
+	
+	// extends AbstractPersistable<Long>
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@Size(min=5, max=50, message="Name must be between 5 and 50 characters")
 	private String name;
@@ -68,11 +70,11 @@ public class Recipe extends AbstractPersistable<Long> {
 		this.category = category;
 	}
 
-//	public long getId() {
-//		return id;
-//	}
+	public Long getId() {
+		return id;
+	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

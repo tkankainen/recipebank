@@ -27,9 +27,9 @@ public class RecipeBankApplication {
 			crepository.save(new Category("Dinner"));
 			crepository.save(new Category("Dessert"));
 			
-			repository.save(new Recipe("Green Curry", "source", 2, crepository.findByName("Lunch").get(0)));
+			repository.save(new Recipe("Green Curry", "Santa Maria", "https://www.santamariaworld.com/fi/reseptit/green-curry/", 2, crepository.findByName("Lunch").get(0)));
 			repository.save(new Recipe("Pesto Eggs", "Liedellä", "https://www.lidl-reseptit.fi/reseptit/pestomunat", 1, crepository.findByName("Breakfast").get(0)));
-			repository.save(new Recipe("Tortilla pizza", "source", 1, crepository.findByName("Lunch").get(0)));
+			repository.save(new Recipe("Tortilla pizza", "Kinuskikissa", "https://www.kinuskikissa.fi/rapsakat-tortillapizzat", 1, crepository.findByName("Lunch").get(0)));
 			repository.save(new Recipe("Pavlova", "K-ruoka", "https://www.k-ruoka.fi/reseptit/pavlova-eli-pehmea-marenkikakku", 2, crepository.findByName("Dessert").get(0)));
 		
 			urepository.save(new User("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER"));

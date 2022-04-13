@@ -8,26 +8,37 @@
 <body> 
 	<div>
 		<h3>Edit recipe</h3>
-		<form th:object="${recipe}" th:action="@{../save}" action="#" method="post">
+		<form th:object="${recipe}" th:action="@{../save}" action="#" method="post" enctype="multipart/form-data">
 			<input type="hidden" th:field="*{id}" class="form-control" />
-			<label for="name">Name</label>
-			<input type="text" id="name" th:field="*{name}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
-			<label for="source">Source</label>
-			<input type="text" id="source" th:field="*{source}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
-			<label for="link">Link</label>
-			<input type="url" id="link" th:field="*{link}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
-			<label for="difficultylevel">Difficulty (1=easy, 2=intermediate, 3=hard):</label> 
-			<input type="number" id="difficultylevel" th:field="*{difficultylevel}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
-			<select id="categorylist" th:field="*{category}" class="form-control">
-			<option th:each="category: ${categories}"
-				th:value="${category.id}"
-				th:text="${category.name}"></option>
-			</select>
-			<div style="clear: both; display: block; height: 10px;"></div>
+			<table>
+				<tr>
+					<td>Name: <input type="text" id="name" th:field="*{name}" />
+					</td>
+					<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</td>
+				</tr>
+				<tr>
+					<td>Source: <input type="text" id="source" th:field="*{source}" /></td>
+				</tr>
+				<tr>
+					<td>Link: <input type="url" id="link" th:field="*{link}" /></td>
+				</tr>
+				
+				<tr>
+					<td>Difficulty (1=easy, 2=intermediate, 3=hard): <input type="number" id="difficultylevel"
+						th:field="*{difficultylevel}" /></td>
+					<td th:if="${#fields.hasErrors('difficultylevel')}" th:errors="*{difficultylevel}">Error</td>
+				</tr>
+				<tr>
+				<td>Category: 
+				<select id="categories" th:field="*{category}">
+					<option th:each="category: ${categories}" 
+					    th:value="${category.id}"
+						th:text="${category.name}"></option>
+				</select></td>
+				</tr>
+			</table>
+			<label>Photo: </label>
+			<input type="file" name="file" accept="image/png, image/jpeg, image/jpg" /><br/>
 			<input type="submit" value="Save"></input>
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<a href="/index">Back to recipe list</a>
