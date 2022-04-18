@@ -10,15 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
-//import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @Entity 
 public class Recipe {
-	
-	// extends AbstractPersistable<Long>
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
