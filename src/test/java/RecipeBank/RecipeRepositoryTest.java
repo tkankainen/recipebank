@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import RecipeBank.domain.Category;
@@ -13,7 +14,7 @@ import RecipeBank.domain.CategoryRepository;
 import RecipeBank.domain.Recipe;
 import RecipeBank.domain.RecipeRepository;
 
-//@AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
 @DataJpaTest
 public class RecipeRepositoryTest {
 	
@@ -24,13 +25,13 @@ public class RecipeRepositoryTest {
 	
 	@Test
 	public void findByNameShouldReturnName() {
-		List<Recipe> recipes = repository.findByName("Pesto Eggs");
-		assertThat(recipes.get(0).getName()).isEqualTo("Pesto Eggs");
+		List<Recipe> recipes = repository.findByName("Green Curry");
+		assertThat(recipes.get(0).getName()).isEqualTo("Green Curry");
 	}
 
 	@Test
 	public void findByDifficultyShouldReturnSize() {
-		List<Recipe> recipes = repository.findByDifficultylevel(1);
+		List<Recipe> recipes = repository.findByDifficultylevel(2);
 		assertThat(recipes).hasSize(2);
 	}
 
